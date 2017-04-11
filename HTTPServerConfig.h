@@ -61,7 +61,7 @@ static unsigned short listeningPort = 80;      // 80 is the default for an HTTP 
 
 // You ONLY MUST set these if you specifically assigned ipMyStatic to a static
 // IP address other than {0,0,0,0}; otherwise DHCP will overwrite these.
-static IPv4 ipGateway   = {192,168,1,1};
+static IPv4 ipGateway   = {169,254,189,230};
 static IPv4 subnetMask  = {255,255,255,0};
 static IPv4 ipDns1      = {8,8,8,8};        // public Google DNS server
 static IPv4 ipDns2      = {8,8,4,4};        // public Google DNS server
@@ -76,12 +76,12 @@ static IPv4 ipDns2      = {8,8,4,4};        // public Google DNS server
 
 // Specify the SSID of your AP
 //const char * szSsid = "a"; // Router
-const char * szSsid = "cw-2.4";
+const char * szSsid = "RoboAir";
 
 // select ONLY 1 for the security you want, or none for no security
 // then updated the appropriate section below for your key or passphrase
 
-#define USE_WPA2_PASSPHRASE
+//#define USE_WPA2_PASSPHRASE
 //#define USE_WPA2_KEY
 //#define USE_WEP40
 //#define USE_WEP104
@@ -91,7 +91,7 @@ const char * szSsid = "cw-2.4";
 #if defined(USE_WPA2_PASSPHRASE)
 
 //    const char * szPassPhrase = "basketball";
-const char * szPassPhrase = "trudyblack2";
+const char * szPassPhrase = "12345678";
     #define WiFiConnectMacro() DWIFIcK::connect(szSsid, szPassPhrase, &status)
 
 #elif defined(USE_WPA2_KEY)

@@ -75,14 +75,18 @@ static const char rwNav[] =
 <title> Robot Movement Page </title>\r\n\
 </head>\r\n\
 <body>\r\n\
-<button onclick=\"window.location.href=\'forward\'\">forward</button>\r\n\
+<button id=\'forward' onclick=\"window.location.href=\'forward\'\">forward</button>\r\n\
 <button onclick=\"window.location.href=\'left\'\">left</button>\r\n\
 <button onclick=\"window.location.href=\'right\'\">right</button>\r\n\
 <button onclick=\"window.location.href=\'back\'\">back</button>\r\n\
 <button onclick=\"window.location.href=\'full\'\">Full Power</button>\r\n\
 <button onclick=\"window.location.href=\'half\'\">Half Power</button>\r\n\
 <br>\r\n\
-</body>\r\n";
+</body>\r\n\
+<script>\r\n\
+</script>\r\n\
+<style>\r\n\
+</style>\r\n";
 
 void run(int loops) {
   int rwI = 0;

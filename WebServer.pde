@@ -8,7 +8,7 @@
 /************************************************************************/
 /*    Author:     Keith Vogel                                           */
 /*    Copyright 2013, Digilent Inc.                                     */
-/************************************************************************/
+/************************************************************************/ 
 /*
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -264,5 +264,10 @@ void setup(void)
 
 void loop(void) 
 {
-    ProcessServer();   
+//    ProcessServer();   
+    digitalWrite(PIN, LOW);
+  digitalWrite(PIN2, HIGH);  
+  digitalWrite(PIN3, LOW);
+  digitalWrite(PIN4, HIGH);
+  run(100);
 }
