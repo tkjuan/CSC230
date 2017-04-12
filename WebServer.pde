@@ -129,6 +129,7 @@ static const char rightStr[]       = "GET /right ";
 static const char backStr[]       = "GET /back ";
 static const char halfStr[]       = "GET /half ";
 static const char fullStr[]       = "GET /full ";
+static const char postStr[]      = "POST /post ";
 
 
 const int PIN = 8;
@@ -185,7 +186,7 @@ void setup(void)
     Serial.println("Copyright 2013, Digilent Inc.");
     Serial.println("Written by Keith Vogel");
     Serial.println();
-
+    Serial0.begin(9600);
     // add rendering functions for dynamically created web pages
     // max of 10 AddHTMLPage() allowed 
 
@@ -195,15 +196,15 @@ void setup(void)
 
     // comment this out if you do not want to support
     // restarting the network stack from a browser
-    AddHTMLPage(szHTMLRestart,      ComposeHTMLRestartPage);
+//    AddHTMLPage(szHTMLRestart,      ComposeHTMLRestartPage);
 
     // comment this out if you do not want to support
     // terminating the server from a browser
-    AddHTMLPage(szHTMLTerminate,    ComposeHTMLTerminatePage);
+//    AddHTMLPage(szHTMLTerminate,    ComposeHTMLTerminatePage);
 
     // comment this out if you do not want to support
     // rebooting (effectively hitting MCLR) the server from a browser
-    AddHTMLPage(szHTMLReboot,       ComposeHTMLRebootPage);
+//    AddHTMLPage(szHTMLReboot,       ComposeHTMLRebootPage);
 
 
 
@@ -213,6 +214,7 @@ void setup(void)
     AddHTMLPage(backStr,       moveBack);
     AddHTMLPage(halfStr,       setPowerHalf);
     AddHTMLPage(fullStr,       setPowerFull);
+    AddHTMLPage(postStr,       ComposeHTMLPostPINS);
     
     pinMode(PIN, OUTPUT);
     pinMode(PIN2, OUTPUT);
@@ -264,10 +266,5 @@ void setup(void)
 
 void loop(void) 
 {
-//    ProcessServer();   
-    digitalWrite(PIN, LOW);
-  digitalWrite(PIN2, HIGH);  
-  digitalWrite(PIN3, LOW);
-  digitalWrite(PIN4, HIGH);
-  run(100);
+    ProcessServer();   
 }

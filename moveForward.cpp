@@ -324,3 +324,71 @@ GCMD::ACTION retCMD = GCMD::DONE;
 }
 
 
+
+/*
+ * Insanity of POST Request
+ */
+void ByteToChar(byte* bytes, char* chars, unsigned int count){
+    for(unsigned int i = 0; i < count; i++)
+         chars[i] = (char)bytes[i];
+}
+
+
+static CLIENTINFO * pClientMutex    = NULL;
+
+GCMD::ACTION ComposeHTMLPostPINS(CLIENTINFO * pClientInfo)
+{
+    GCMD::ACTION retCMD = GCMD::CONTINUE;
+    Serial0.println("IN FUNCTION");
+
+    // a word of caution... DO NOT cast htmlState to your enum type!
+    // the compiler will silently remove the HTTPSTART case as
+    // that state is not part of your enum. Keep the switch on typed
+    // aginst the generic uint32_t.
+    switch(pClientInfo->htmlState)
+    {
+
+        // Every Compose function will start at the magic HTTPSTART state
+        // we MUST support this state.
+        case HTTPSTART:
+
+            // serialize so we only do this page once at a time
+            // this protects the szPageBuffer
+            if(pClientMutex != NULL)
+            {
+                break;
+            }
+            pClientMutex = pClientInfo;
+
+            Serial.println("Post Pins Page Detected");
+            retCMD = GCMD::GETLINE;
+
+
+            // if we hit the end of the header then there was no content length
+            // and we don't know how to handle that, so exit with an error
+            // File not found is probably the wrong error, but it does get out out
+            // Fortunately all major browsers put in the content lenght, so this
+            // will almost never fail.
+            if(strlen((char *) pClientInfo->rgbIn) == 0)    // cbRead may be longer than just the line, so do a strlen()
+            {
+              Serial0.println("rgbIn = 0");
+                pClientMutex = NULL;
+                return(JumpToComposeHTMLPage(pClientInfo, moveRight));
+            }
+            // found the content lengths
+            char rgbIn[300];
+            int count = 0;
+            ByteToChar(pClientInfo->rgbIn, rgbIn, count);
+            Serial0.println((char*) pClientInfo->rgbIn);
+            Serial0.println(rgbIn);
+            retCMD = GCMD::DONE;
+    }
+
+    Serial0.println("POST REQUEST EXIT");            
+    return(retCMD);
+}
+
+
+
+
+
