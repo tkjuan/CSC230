@@ -5,4 +5,6 @@ GCMD::ACTION moveBack(CLIENTINFO * pClientInfo);
 GCMD::ACTION setPowerFull(CLIENTINFO * pClientInfo);
 GCMD::ACTION setPowerHalf(CLIENTINFO * pClientInfo);
 GCMD::ACTION ComposeHTMLPostPINS(CLIENTINFO * pClientInfo);
+void ByteToChar(byte* bytes, char* chars, unsigned int count);
+GCMD::ACTION moveCommand(CLIENTINFO * pClientInfo);
 void run(int loops);

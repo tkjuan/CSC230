@@ -99,25 +99,25 @@ void SDSetup(void)
     if (SD.begin(pinSdCs))
     {
 	    // Card successfully initialized, so we have a file system.
-    	Serial.println("SD card initialized. File system found.");
+    	Serial0.println("SD card initialized. File system found.");
 
         if(SD.exists((char *) szDefaultPage))
         {
-            Serial.print("Default HTML page:");
-            Serial.print(szDefaultPage);
-            Serial.println(" exists!");
+            Serial0.print("Default HTML page:");
+            Serial0.print(szDefaultPage);
+            Serial0.println(" exists!");
             fSDfs = true;
         }
 
         else
         {
-            Serial.print("Unable to find default HTML page:");
-            Serial.println(szDefaultPage);
+            Serial0.print("Unable to find default HTML page:");
+            Serial0.println(szDefaultPage);
         }
     }
     else
     {
-            Serial.println("Unable to find SD Card Reader or filesystem");
+            Serial0.println("Unable to find SD Card Reader or filesystem");
     }
 }
 
@@ -157,10 +157,10 @@ GCMD::ACTION ComposeHTMLSDPage(CLIENTINFO * pClientInfo)
             }
             pClientMutex = pClientInfo;
 
-            Serial.println("Read an HTML page off of the SD card");
+            Serial0.println("Read an HTML page off of the SD card");
 
-            Serial.print("Entering Client ID: 0x");
-            Serial.println((uint32_t) pClientMutex, HEX);
+            Serial0.print("Entering Client ID: 0x");
+            Serial0.println((uint32_t) pClientMutex, HEX);
 
             pClientInfo->htmlState = PARSEFILENAME;
             retCMD = GCMD::GETLINE;
@@ -199,14 +199,14 @@ GCMD::ACTION ComposeHTMLSDPage(CLIENTINFO * pClientInfo)
                 *pFileNameEnd = '\0';
             }
 
-            Serial.print("SD FileName:");
-            Serial.println(szFileName);
+            Serial0.print("SD FileName:");
+            Serial0.println(szFileName);
 
             if(SD.exists((char *) szFileName))
             {
-                Serial.print("HTML page:");
-                Serial.print(szFileName);
-                Serial.println(" exists!");
+                Serial0.print("HTML page:");
+                Serial0.print(szFileName);
+                Serial0.println(" exists!");
                 pClientInfo->htmlState = BUILDHTTP;
             }
 
@@ -232,20 +232,20 @@ GCMD::ACTION ComposeHTMLSDPage(CLIENTINFO * pClientInfo)
                     cbSent = 0;
                     tStart = millis();
 
-                    Serial.print("Writing file:");
-                    Serial.println(szFileName);
+                    Serial0.print("Writing file:");
+                    Serial0.println(szFileName);
                 }
                 else
                 {
-                    Serial.print("Unable to build HTTP directive for file:");
-                    Serial.println(szFileName);
+                    Serial0.print("Unable to build HTTP directive for file:");
+                    Serial0.println(szFileName);
                     pClientInfo->htmlState = JMPFILENOTFOUND;
                 }
             }
             else
             {
-                Serial.print("Unable to open HTML page:");
-                Serial.println(szFileName);
+                Serial0.print("Unable to open HTML page:");
+                Serial0.println(szFileName);
                 pClientInfo->htmlState = JMPFILENOTFOUND;
             }
             break;
@@ -275,12 +275,12 @@ GCMD::ACTION ComposeHTMLSDPage(CLIENTINFO * pClientInfo)
             break;
     
          case EXIT:
-            Serial.println("Wrote page cleanly");
+            Serial0.println("Wrote page cleanly");
             pClientInfo->htmlState = HTTPDISCONNECT;
             break;
 
         case JMPFILENOTFOUND:
-            Serial.println("Jumping to HTTP File Not Found page");
+            Serial0.println("Jumping to HTTP File Not Found page");
             if(isMySD(sdLockId))
             {
                 fileSD.close();
@@ -291,15 +291,15 @@ GCMD::ACTION ComposeHTMLSDPage(CLIENTINFO * pClientInfo)
             break;
 
         case HTTPTIMEOUT:
-            Serial.println("Timeout error occured, closing the session");
+            Serial0.println("Timeout error occured, closing the session");
 
             // fall thru to close
 
         case HTTPDISCONNECT:
             if(pClientMutex == pClientInfo)
             {
-                Serial.print("Closing Client ID: 0x");
-                Serial.println((uint32_t) pClientMutex, HEX);
+                Serial0.print("Closing Client ID: 0x");
+                Serial0.println((uint32_t) pClientMutex, HEX);
                 if(isMySD(sdLockId))
                 {
                     fileSD.close();

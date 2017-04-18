@@ -8,22 +8,22 @@
 /************************************************************************/
 /*    Author:     Keith Vogel                                           */
 /*    Copyright 2013, Digilent Inc.                                     */
-/************************************************************************/ 
+/************************************************************************/
 /*
   This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ 
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 /************************************************************************/
 /*  Revision History:                                                   */
 /*                                                                      */
@@ -129,8 +129,7 @@ static const char rightStr[]       = "GET /right ";
 static const char backStr[]       = "GET /back ";
 static const char halfStr[]       = "GET /half ";
 static const char fullStr[]       = "GET /full ";
-static const char postStr[]      = "POST /post ";
-
+static const char moveStr[]      = "POST /remote.htm ";
 
 const int PIN = 8;
 const int PIN2 = 9;
@@ -143,8 +142,8 @@ const int PIN6 = 13;
 
 
 /**************************************************************************************
-
-
+ * 
+ * 
 /************************************************************************/
 /*    HTTP URL Matching Strings                                         */
 /************************************************************************/
@@ -156,6 +155,7 @@ static const char szHTMLTerminate[]     = "GET /Terminate ";
 static const char szHTMLReboot[]        = "GET /Reboot ";
 static const char szHTMLFavicon[]       = "GET /favicon.ico ";
 static const char szHTMLSample[]        = "GET /Sample ";
+
 
 // here is our sample/example dynamically created HTML page
 GCMD::ACTION ComposeHTMLSamplePage(CLIENTINFO * pClientInfo);
@@ -174,79 +174,80 @@ GCMD::ACTION ComposeHTMLSamplePage(CLIENTINFO * pClientInfo);
  *      
  *      
  * ------------------------------------------------------------ */
- 
+
 const int LED = 13;
 
 void setup(void) 
 {   
-    // Must do a Serial.begin because the HTTP Server
-    // has diagnostic prints in it.
-    Serial.begin(9600);
-    Serial.println("WebServer v2.0");
-    Serial.println("Copyright 2013, Digilent Inc.");
-    Serial.println("Written by Keith Vogel");
-    Serial.println();
-    Serial0.begin(9600);
-    // add rendering functions for dynamically created web pages
-    // max of 10 AddHTMLPage() allowed 
+  // Must do a Serial.begin because the HTTP Server
+  // has diagnostic prints in it.
+  Serial.begin(9600);
 
-    // This is adding our sample dynamically HTML page
-    // It will get invoked when http://<IP>/Sample is specified on the browser
-    AddHTMLPage(szHTMLSample,      ComposeHTMLSamplePage);
+  Serial0.begin(9600);
+  Serial0.println("WebServer v2.0");
+  Serial0.println("Copyright 2013, Digilent Inc.");
+  Serial0.println("Written by Keith Vogel");
+  Serial0.println();
+  // add rendering functions for dynamically created web pages
+  // max of 10 AddHTMLPage() allowed 
 
-    // comment this out if you do not want to support
-    // restarting the network stack from a browser
-//    AddHTMLPage(szHTMLRestart,      ComposeHTMLRestartPage);
+  // This is adding our sample dynamically HTML page
+  // It will get invoked when http://<IP>/Sample is specified on the browser
+  AddHTMLPage(szHTMLSample,      ComposeHTMLSamplePage);
 
-    // comment this out if you do not want to support
-    // terminating the server from a browser
-//    AddHTMLPage(szHTMLTerminate,    ComposeHTMLTerminatePage);
+  // comment this out if you do not want to support
+  // restarting the network stack from a browser
+  //    AddHTMLPage(szHTMLRestart,      ComposeHTMLRestartPage);
 
-    // comment this out if you do not want to support
-    // rebooting (effectively hitting MCLR) the server from a browser
-//    AddHTMLPage(szHTMLReboot,       ComposeHTMLRebootPage);
+  // comment this out if you do not want to support
+  // terminating the server from a browser
+  //    AddHTMLPage(szHTMLTerminate,    ComposeHTMLTerminatePage);
+
+  // comment this out if you do not want to support
+  // rebooting (effectively hitting MCLR) the server from a browser
+  //    AddHTMLPage(szHTMLReboot,       ComposeHTMLRebootPage);
 
 
 
-    AddHTMLPage(forwardStr,    moveForward);
-    AddHTMLPage(leftStr,       moveLeft);
-    AddHTMLPage(rightStr,      moveRight);
-    AddHTMLPage(backStr,       moveBack);
-    AddHTMLPage(halfStr,       setPowerHalf);
-    AddHTMLPage(fullStr,       setPowerFull);
-    AddHTMLPage(postStr,       ComposeHTMLPostPINS);
-    
-    pinMode(PIN, OUTPUT);
-    pinMode(PIN2, OUTPUT);
-    pinMode(PIN3, OUTPUT);
-    pinMode(PIN4, OUTPUT);
-    pinMode(PIN5, OUTPUT);
-    pinMode(PIN6, OUTPUT);
-    digitalWrite(PIN, LOW);
-    digitalWrite(PIN2, LOW);
-    digitalWrite(PIN3, LOW);
-    digitalWrite(PIN4, LOW);
-    digitalWrite(PIN5, LOW);
-    digitalWrite(PIN6, LOW);
-    
-    // This example supports favorite ICONs, 
-    // those are those icon's next to the URL in the address line 
-    // on the browser once the page is displayed.
-    // To support those icons, have at the root of the SD file direcotory
-    // an ICON (.ico) file with your ICON in it. The file MUST be named
-    // favicon.ico. If you do not have an icon, then uncomment the following
-    // line so the server will tell the browser with an HTTP file not found
-    // error that we don't have a favoite ICON.
-    // AddHTMLPage(szHTMLFavicon,      ComposeHTTP404Error);
+  AddHTMLPage(forwardStr,    moveForward);
+  AddHTMLPage(leftStr,       moveLeft);
+  AddHTMLPage(rightStr,      moveRight);
+  AddHTMLPage(backStr,       moveBack);
+  AddHTMLPage(halfStr,       setPowerHalf);
+  AddHTMLPage(fullStr,       setPowerFull);
+  AddHTMLPage(moveStr,       moveCommand);
 
-    // Make reading files from the SD card the default compose function
-    SetDefaultHTMLPage(ComposeHTMLSDPage);
+  pinMode(PIN, OUTPUT);
+  pinMode(PIN2, OUTPUT);
+  pinMode(PIN3, OUTPUT);
+  pinMode(PIN4, OUTPUT);
+  pinMode(PIN5, OUTPUT);
+  pinMode(PIN6, OUTPUT);
+  digitalWrite(PIN, LOW);
+  digitalWrite(PIN2, LOW);
+  digitalWrite(PIN3, LOW);
+  digitalWrite(PIN4, LOW);
+  digitalWrite(PIN5, LOW);
+  digitalWrite(PIN6, LOW);
 
-    // Initialize the SD card
-    SDSetup();
+  // This example supports favorite ICONs, 
+  // those are those icon's next to the URL in the address line 
+  // on the browser once the page is displayed.
+  // To support those icons, have at the root of the SD file direcotory
+  // an ICON (.ico) file with your ICON in it. The file MUST be named
+  // favicon.ico. If you do not have an icon, then uncomment the following
+  // line so the server will tell the browser with an HTTP file not found
+  // error that we don't have a favoite ICON.
+  // AddHTMLPage(szHTMLFavicon,      ComposeHTTP404Error);
 
-    // Initialize the HTTP server
-    ServerSetup();
+  // Make reading files from the SD card the default compose function
+  SetDefaultHTMLPage(ComposeHTMLSDPage);
+
+  // Initialize the SD card
+  SDSetup();
+
+  // Initialize the HTTP server
+  ServerSetup();
 }
 
 /***    void loop(void) 
@@ -266,5 +267,6 @@ void setup(void)
 
 void loop(void) 
 {
-    ProcessServer();   
+  ProcessServer();   
 }
+

@@ -83,12 +83,12 @@ GCMD::ACTION ComposeHTTP404Error(CLIENTINFO * pClientInfo)
             }
             pClientMutex = pClientInfo;
 
-            Serial.println("HTTP Error");
+            Serial0.println("HTTP Error");
             pClientInfo->htmlState = HTTPERROR;
             break;
-
+        
         case HTTPERROR:
-            Serial.println();
+            Serial0.println();
             pClientInfo->pbOut = (const byte *) szHTTP404Error;
             pClientInfo->cbWrite = sizeof(szHTTP404Error)-1;
             pClientInfo->htmlState = HTTPDISCONNECT;
@@ -111,6 +111,27 @@ GCMD::ACTION ComposeHTTP404Error(CLIENTINFO * pClientInfo)
 
     return(retCMD);
 }
+
+
+
+/***    GCMD::ACTION ComposeHTTP200(CLIENTINFO * pClientInfo)
+ *
+ *    Parameters:
+ *          pClientInfo - the client info representing this connection and web page
+ *              
+ *    Return Values:
+ *          GCMD::ACTION    - GCMD::CONTINUE, just return with no outside action
+ *                          - GCMD::READ, non-blocking read of input data into the rgbIn buffer appended to the end of cbRead
+ *                          - GCMD::GETLINE, blocking read until a line of input is read or until the rgbIn buffer is full, always the line starts at the beginnig of the rgbIn
+ *                          - GCMD::WRITE, loop writing until all cbWrite bytes are written from the pbOut buffer
+ *                          - GCMD::DONE, we are done processing and the connection can be closed
+ *
+ *    Description: 
+ *    
+ *      Renders the file not found 404 error  
+ *    
+ * ------------------------------------------------------------ */
+ 
 
 /***    const char * GetContentTypeFromExt(const char * szExt)
  *
@@ -259,9 +280,9 @@ uint32_t BuildHTTPOKStr(bool fNoCache, uint32_t cbContentLen, const char * szFil
     // put in the null terminator
     szHTTPOKStr[i] = '\0';
 
-    Serial.println("HTTP directive:");
-    Serial.print(szHTTPOKStr);
-    Serial.println("End of directive");
+    Serial0.println("HTTP directive:");
+    Serial0.print(szHTTPOKStr);
+    Serial0.println("End of directive");
 
     return(i);
 }
