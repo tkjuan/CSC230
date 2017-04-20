@@ -209,12 +209,12 @@ void setup(void)
 
 
 
-  AddHTMLPage(forwardStr,    moveForward);
-  AddHTMLPage(leftStr,       moveLeft);
-  AddHTMLPage(rightStr,      moveRight);
-  AddHTMLPage(backStr,       moveBack);
-  AddHTMLPage(halfStr,       setPowerHalf);
-  AddHTMLPage(fullStr,       setPowerFull);
+//  AddHTMLPage(forwardStr,    moveForward);
+//  AddHTMLPage(leftStr,       moveLeft);
+//  AddHTMLPage(rightStr,      moveRight);
+//  AddHTMLPage(backStr,       moveBack);
+//  AddHTMLPage(halfStr,       setPowerHalf);
+//  AddHTMLPage(fullStr,       setPowerFull);
   AddHTMLPage(moveStr,       moveCommand);
 
   pinMode(PIN, OUTPUT);

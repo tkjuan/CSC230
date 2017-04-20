@@ -1,0 +1,118 @@
+<head>
+<title> Robot Movement Page </title>
+<style>
+p {
+  background-color: lightblue;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+}
+#forward, #back {
+  margin-left: 50px;
+  display: block;
+}
+
+#right, #left{
+  margin-left: 30px;
+  display: inline-block;
+}
+
+#navButtons {
+  display: block;
+  margin-bottom: 20px;
+  align-content: center;
+  width: 50%;
+}
+
+</style>
+</head>
+<body>
+  <div id='navButtons'>
+    <div id = 'forward'>
+      <p>forward</p>
+    </div>
+    <div id = 'left'>
+      <p>left</p>
+    </div>
+    <div id = 'right'>
+      <p>right</p>
+    </div>
+    <div id='back'>
+      <p>back</p>
+    </div>
+  </div>
+</div>
+<button>Full Power</button>
+<button>Half Power</button>
+<br>
+<script>
+touchStart = false;
+fButton = document.getElementById('forward');
+lButton = document.getElementById('left');
+rButton = document.getElementById('right');
+bButton = document.getElementById('back');
+
+var moveFunc = function(movementCode, element) {
+  console.log("in moveFunc");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log("Move");
+    }
+  };
+  xhttp.open("POST", "remote.htm", true);
+  xhttp.setRequestHeader("Content-type", "text/plain");
+  console.log("in moveFunc: pre send. movementCode: " + movementCode);
+  xhttp.send(movementCode);
+  console.log("in moveFunc: post send");
+  return false;
+};
+
+var stopFunc = function(element) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log("Stop");
+    }
+  };
+  xhttp.open("POST", "remote.htm", true);
+  xhttp.setRequestHeader("Content-type", "text/plain");
+  xhttp.send("_0000");
+  return false;
+};
+
+fButton.addEventListener("touchstart", function(e) {
+  moveFunc("_1000", fButton);
+});
+fButton.addEventListener("touchend", function(e) {
+  stopFunc(fButton);
+});
+
+bButton.addEventListener("touchstart", function(e) {
+  moveFunc("_2000", bButton);
+});
+bButton.addEventListener("touchend", function(e) {
+  stopFunc(bButton);
+});
+
+lButton.addEventListener("touchstart", function(e) {
+  moveFunc("_3000", lButton);
+});
+lButton.addEventListener("touchend", function(e) {
+  stopFunc(lButton);
+});
+
+rButton.addEventListener("touchstart", function(e) {
+  moveFunc("_4000", rButton);
+});
+rButton.addEventListener("touchend", function(e) {
+  stopFunc(rButton);
+});
+
+
+</script>
+</body>

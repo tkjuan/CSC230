@@ -44,7 +44,7 @@
 // but you MUST then set the remaining Gateway, subnet, and DNS values below.
 
 //static IPv4 ipMyStatic = {192,168,1,225};    // a place to calculate our static IP 
-static IPv4 ipMyStatic = {192,168,0,11};    // a place to calculate our static IP 
+static IPv4 ipMyStatic = {192,168,1,11};    // a place to calculate our static IP 
 
 // This will be ignored if ipMyStatic is NOT set to {0,0,0,0}
 // If ipMyStatic == {0,0,0,0} AND localStaticIP == 0, then the full IP returned by DHCP will be used
@@ -61,7 +61,7 @@ static unsigned short listeningPort = 80;      // 80 is the default for an HTTP 
 
 // You ONLY MUST set these if you specifically assigned ipMyStatic to a static
 // IP address other than {0,0,0,0}; otherwise DHCP will overwrite these.
-static IPv4 ipGateway   = {192,168,0,1};
+static IPv4 ipGateway   = {192,168,1,1};
 static IPv4 subnetMask  = {255,255,255,0};
 static IPv4 ipDns1      = {8,8,8,8};        // public Google DNS server
 static IPv4 ipDns2      = {8,8,4,4};        // public Google DNS server
@@ -76,7 +76,7 @@ static IPv4 ipDns2      = {8,8,4,4};        // public Google DNS server
 
 // Specify the SSID of your AP
 //const char * szSsid = "a"; // Router
-const char * szSsid = "a";
+const char * szSsid = "robotTest";
 
 // select ONLY 1 for the security you want, or none for no security
 // then updated the appropriate section below for your key or passphrase
