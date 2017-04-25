@@ -90,7 +90,7 @@ const int PIN2 = 9;
 const int PIN3 = 10;
 const int PIN4 = 11; 
 const int PIN5 = 12;
-const int PIN6 = 13;
+const int PIN6 = 7;
 
 
 const int rwPeriod = 10;
@@ -102,245 +102,245 @@ GCMD::ACTION ComposeHTTP200(CLIENTINFO * pClientInfo);
 
 //static const char rwNav[] = "<head><title> Robot Movement Page </title></head><body><div id='navButtons'><div><button id='forward' onclick=\"window.location.href=\'forward\'\">forward</button></div><div><button id='left' onclick=\"window.location.href=\'left\'\">left</button><button id='right' onclick=\"window.location.href=\'right\'\">right</button>";
 
-//void run(int loops) {
-//  int rwI = 0;
-//  while(rwI < loops) {
-//            digitalWrite(PIN5, HIGH);
-//            digitalWrite(PIN6, HIGH);  
-//            delay(rwTon);
-//            digitalWrite(PIN5, LOW);
-//            digitalWrite(PIN6, LOW);      
-//            delay(rwPeriod - rwTon);
-//            rwI++;
-//          }   
-//}
+void run(int loops) {
+  int rwI = 0;
+  while(rwI < loops) {
+            digitalWrite(PIN5, HIGH);
+            digitalWrite(PIN6, HIGH);  
+            delay(rwTon);
+            digitalWrite(PIN5, LOW);
+            digitalWrite(PIN6, LOW);      
+            delay(rwPeriod - rwTon);
+            rwI++;
+          }   
+}
 
 void run() {  
   digitalWrite(PIN5, HIGH);
   digitalWrite(PIN6, HIGH);
 }
 
-//
-//GCMD::ACTION moveForward(CLIENTINFO * pClientInfo){
-//   GCMD::ACTION retCMD = GCMD::DONE;  
-//   switch(pClientInfo->htmlState)
-//    {
-//         case HTTPSTART:
-//            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
-//            pClientInfo->pbOut = pClientInfo->rgbOut;
-//            pClientInfo->htmlState = WRITECONTENT;
-//            retCMD = GCMD::WRITE;
-//            break;
-//
-//         case WRITECONTENT:
-//             pClientInfo->pbOut = (const byte *) rwNav;
-//             pClientInfo->cbWrite = sizeof(rwNav)-1;
-//             pClientInfo->htmlState = DONE;
-//             retCMD = GCMD::WRITE;
-//             break;
-//
-//        case DONE:
-//
-//            // Foward Motion
-//            digitalWrite(PIN, HIGH);
-//            digitalWrite(PIN2, LOW);  
-//            digitalWrite(PIN3, HIGH);
-//            digitalWrite(PIN4, LOW);
-//          run(100);
-//            digitalWrite(PIN, LOW);
-//            digitalWrite(PIN3, LOW);
-//        default:
-//            retCMD = GCMD::DONE;
-//            break;
-//    }
-//  
-//  return(retCMD);
-//}
-//
-//GCMD::ACTION setPowerFull(CLIENTINFO * pClientInfo)
-//{
-//  
-//  GCMD::ACTION retCMD = GCMD::DONE;
-//
-//  
-//  switch(pClientInfo->htmlState)
-//    {
-//  case HTTPSTART:
-//            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
-//            pClientInfo->pbOut = pClientInfo->rgbOut;
-//            pClientInfo->htmlState = WRITECONTENT;
-//            retCMD = GCMD::WRITE;
-//            break;
-//
-//         case WRITECONTENT:
-//             pClientInfo->pbOut = (const byte *) rwNav;
-//             pClientInfo->cbWrite = sizeof(rwNav)-1;
-//             pClientInfo->htmlState = DONE;
-//             retCMD = GCMD::WRITE;
-//             break;
-//
-//        case DONE:
-//             rwTon = 10;
-//    
-//        default:
-//            retCMD = GCMD::DONE;
-//            break;
-//    }
-//      return(retCMD);
-//}
-//
-//GCMD::ACTION setPowerHalf(CLIENTINFO * pClientInfo)
-//{
-//  GCMD::ACTION retCMD = GCMD::DONE;
-//  
-//  switch(pClientInfo->htmlState)
-//    {
-//    case HTTPSTART:
-//            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
-//            pClientInfo->pbOut = pClientInfo->rgbOut;
-//            pClientInfo->htmlState = WRITECONTENT;
-//            retCMD = GCMD::WRITE;
-//            break;
-//
-//         case WRITECONTENT:
-//             pClientInfo->pbOut = (const byte *) rwNav;
-//             pClientInfo->cbWrite = sizeof(rwNav)-1;
-//             pClientInfo->htmlState = DONE;
-//             retCMD = GCMD::WRITE;
-//             break;
-//
-//        case DONE:
-//             rwTon = 5;
-//         
-//        default:
-//            retCMD = GCMD::DONE;
-//            break;
-//    }
-//      return(retCMD);
-//}
-//
-//
-//GCMD::ACTION moveBack(CLIENTINFO * pClientInfo)
-//{
-//
-//GCMD::ACTION retCMD = GCMD::DONE;  
-//
-//   switch(pClientInfo->htmlState)
-//    {
-//         case HTTPSTART:
-//            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
-//            pClientInfo->pbOut = pClientInfo->rgbOut;
-//            pClientInfo->htmlState = WRITECONTENT;
-//            retCMD = GCMD::WRITE;
-//            break;
-//
-//         case WRITECONTENT:
-//             pClientInfo->pbOut = (const byte *) rwNav;
-//             pClientInfo->cbWrite = sizeof(rwNav)-1;
-//             pClientInfo->htmlState = DONE;
-//             retCMD = GCMD::WRITE;
-//             break;
-//
-//        case DONE:
-//        
-//            digitalWrite(PIN, LOW);
-//            digitalWrite(PIN2, HIGH);  
-//            digitalWrite(PIN3, LOW);
-//            digitalWrite(PIN4, HIGH);
-//    
-//            run(100);
-//    
-//            digitalWrite(PIN2, LOW);
-//            digitalWrite(PIN4, LOW);
-//        default:
-//            retCMD = GCMD::DONE;
-//            break;
-//    }
-//  
-//  return(retCMD);
-//}
-//
-//
-//GCMD::ACTION moveLeft(CLIENTINFO * pClientInfo)
-//{
-//GCMD::ACTION retCMD = GCMD::DONE;  
-//
-//   switch(pClientInfo->htmlState)
-//    {
-//         case HTTPSTART:
-//            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
-//            pClientInfo->pbOut = pClientInfo->rgbOut;
-//            pClientInfo->htmlState = WRITECONTENT;
-//            retCMD = GCMD::WRITE;
-//            break;
-//
-//         case WRITECONTENT:
-//             pClientInfo->pbOut = (const byte *) rwNav;
-//             pClientInfo->cbWrite = sizeof(rwNav)-1;
-//             pClientInfo->htmlState = DONE;
-//             retCMD = GCMD::WRITE;
-//             break;
-//
-//        case DONE:
-//            digitalWrite(PIN, LOW);
-//            digitalWrite(PIN2, HIGH);
-//    
-//            digitalWrite(PIN3, HIGH);
-//            digitalWrite(PIN4, LOW);
-//    
-//            run(15);
-//    
-//            digitalWrite(PIN2, LOW);
-//            digitalWrite(PIN3, LOW);
-//        default:
-//            retCMD = GCMD::DONE;
-//            break;
-//    }
-//  
-//  return(retCMD);
-//}
-//
-//
-//GCMD::ACTION moveRight(CLIENTINFO * pClientInfo)
-//{
-//
-//  
-//GCMD::ACTION retCMD = GCMD::DONE;  
-//
-//   switch(pClientInfo->htmlState)
-//    {
-//         case HTTPSTART:
-//            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
-//            pClientInfo->pbOut = pClientInfo->rgbOut;
-//            pClientInfo->htmlState = WRITECONTENT;
-//            retCMD = GCMD::WRITE;
-//            break;
-//
-//         case WRITECONTENT:
-//             pClientInfo->pbOut = (const byte *) rwNav;
-//             pClientInfo->cbWrite = sizeof(rwNav)-1;
-//             pClientInfo->htmlState = DONE;
-//             retCMD = GCMD::WRITE;
-//             break;
-//
-//        case DONE:
-//            digitalWrite(PIN, HIGH);
-//            digitalWrite(PIN2, LOW);
-//    
-//            digitalWrite(PIN3, LOW);
-//            digitalWrite(PIN4, HIGH);
-//
-//            run(15);
-//    
-//            digitalWrite(PIN, LOW);
-//            digitalWrite(PIN4, LOW);
-//        default:
-//            retCMD = GCMD::DONE;
-//            break;
-//    }
-//  
-//  return(retCMD);
-//}
+
+GCMD::ACTION moveForward(CLIENTINFO * pClientInfo){
+   GCMD::ACTION retCMD = GCMD::DONE;  
+   switch(pClientInfo->htmlState)
+    {
+         case HTTPSTART:
+            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
+            pClientInfo->pbOut = pClientInfo->rgbOut;
+            pClientInfo->htmlState = WRITECONTENT;
+            retCMD = GCMD::WRITE;
+            break;
+
+         case WRITECONTENT:
+             pClientInfo->pbOut = (const byte *) rwNav;
+             pClientInfo->cbWrite = sizeof(rwNav)-1;
+             pClientInfo->htmlState = DONE;
+             retCMD = GCMD::WRITE;
+             break;
+
+        case DONE:
+
+            // Foward Motion
+            digitalWrite(PIN, HIGH);
+            digitalWrite(PIN2, LOW);  
+            digitalWrite(PIN3, HIGH);
+            digitalWrite(PIN4, LOW);
+          run(100);
+            digitalWrite(PIN, LOW);
+            digitalWrite(PIN3, LOW);
+        default:
+            retCMD = GCMD::DONE;
+            break;
+    }
+  
+  return(retCMD);
+}
+
+GCMD::ACTION setPowerFull(CLIENTINFO * pClientInfo)
+{
+  
+  GCMD::ACTION retCMD = GCMD::DONE;
+
+  
+  switch(pClientInfo->htmlState)
+    {
+  case HTTPSTART:
+            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
+            pClientInfo->pbOut = pClientInfo->rgbOut;
+            pClientInfo->htmlState = WRITECONTENT;
+            retCMD = GCMD::WRITE;
+            break;
+
+         case WRITECONTENT:
+             pClientInfo->pbOut = (const byte *) rwNav;
+             pClientInfo->cbWrite = sizeof(rwNav)-1;
+             pClientInfo->htmlState = DONE;
+             retCMD = GCMD::WRITE;
+             break;
+
+        case DONE:
+             rwTon = 10;
+    
+        default:
+            retCMD = GCMD::DONE;
+            break;
+    }
+      return(retCMD);
+}
+
+GCMD::ACTION setPowerHalf(CLIENTINFO * pClientInfo)
+{
+  GCMD::ACTION retCMD = GCMD::DONE;
+  
+  switch(pClientInfo->htmlState)
+    {
+    case HTTPSTART:
+            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
+            pClientInfo->pbOut = pClientInfo->rgbOut;
+            pClientInfo->htmlState = WRITECONTENT;
+            retCMD = GCMD::WRITE;
+            break;
+
+         case WRITECONTENT:
+             pClientInfo->pbOut = (const byte *) rwNav;
+             pClientInfo->cbWrite = sizeof(rwNav)-1;
+             pClientInfo->htmlState = DONE;
+             retCMD = GCMD::WRITE;
+             break;
+
+        case DONE:
+             rwTon = 5;
+         
+        default:
+            retCMD = GCMD::DONE;
+            break;
+    }
+      return(retCMD);
+}
+
+
+GCMD::ACTION moveBack(CLIENTINFO * pClientInfo)
+{
+
+GCMD::ACTION retCMD = GCMD::DONE;  
+
+   switch(pClientInfo->htmlState)
+    {
+         case HTTPSTART:
+            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
+            pClientInfo->pbOut = pClientInfo->rgbOut;
+            pClientInfo->htmlState = WRITECONTENT;
+            retCMD = GCMD::WRITE;
+            break;
+
+         case WRITECONTENT:
+             pClientInfo->pbOut = (const byte *) rwNav;
+             pClientInfo->cbWrite = sizeof(rwNav)-1;
+             pClientInfo->htmlState = DONE;
+             retCMD = GCMD::WRITE;
+             break;
+
+        case DONE:
+        
+            digitalWrite(PIN, LOW);
+            digitalWrite(PIN2, HIGH);  
+            digitalWrite(PIN3, LOW);
+            digitalWrite(PIN4, HIGH);
+    
+            run(100);
+    
+            digitalWrite(PIN2, LOW);
+            digitalWrite(PIN4, LOW);
+        default:
+            retCMD = GCMD::DONE;
+            break;
+    }
+  
+  return(retCMD);
+}
+
+
+GCMD::ACTION moveLeft(CLIENTINFO * pClientInfo)
+{
+GCMD::ACTION retCMD = GCMD::DONE;  
+
+   switch(pClientInfo->htmlState)
+    {
+         case HTTPSTART:
+            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
+            pClientInfo->pbOut = pClientInfo->rgbOut;
+            pClientInfo->htmlState = WRITECONTENT;
+            retCMD = GCMD::WRITE;
+            break;
+
+         case WRITECONTENT:
+             pClientInfo->pbOut = (const byte *) rwNav;
+             pClientInfo->cbWrite = sizeof(rwNav)-1;
+             pClientInfo->htmlState = DONE;
+             retCMD = GCMD::WRITE;
+             break;
+
+        case DONE:
+            digitalWrite(PIN, LOW);
+            digitalWrite(PIN2, HIGH);
+    
+            digitalWrite(PIN3, HIGH);
+            digitalWrite(PIN4, LOW);
+    
+            run(15);
+    
+            digitalWrite(PIN2, LOW);
+            digitalWrite(PIN3, LOW);
+        default:
+            retCMD = GCMD::DONE;
+            break;
+    }
+  
+  return(retCMD);
+}
+
+
+GCMD::ACTION moveRight(CLIENTINFO * pClientInfo)
+{
+
+  
+GCMD::ACTION retCMD = GCMD::DONE;  
+
+   switch(pClientInfo->htmlState)
+    {
+         case HTTPSTART:
+            pClientInfo->cbWrite = BuildHTTPOKStr(true, sizeof(rwNav)-1, ".htm", (char *) pClientInfo->rgbOut, sizeof(pClientInfo->rgbOut));
+            pClientInfo->pbOut = pClientInfo->rgbOut;
+            pClientInfo->htmlState = WRITECONTENT;
+            retCMD = GCMD::WRITE;
+            break;
+
+         case WRITECONTENT:
+             pClientInfo->pbOut = (const byte *) rwNav;
+             pClientInfo->cbWrite = sizeof(rwNav)-1;
+             pClientInfo->htmlState = DONE;
+             retCMD = GCMD::WRITE;
+             break;
+
+        case DONE:
+            digitalWrite(PIN, HIGH);
+            digitalWrite(PIN2, LOW);
+    
+            digitalWrite(PIN3, LOW);
+            digitalWrite(PIN4, HIGH);
+
+            run(15);
+    
+            digitalWrite(PIN, LOW);
+            digitalWrite(PIN4, LOW);
+        default:
+            retCMD = GCMD::DONE;
+            break;
+    }
+  
+  return(retCMD);
+}
 
 
 /*
