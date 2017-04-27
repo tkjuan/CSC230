@@ -122,14 +122,14 @@
 /**************************************************************************************
 /*    Manual    Edits
 /**************************************************************************************/
-#include <moveForward.h>
-static const char forwardStr[]       = "GET /forward ";
-static const char leftStr[]       = "GET /left ";
-static const char rightStr[]       = "GET /right ";
-static const char backStr[]       = "GET /back ";
-static const char halfStr[]       = "GET /half ";
-static const char fullStr[]       = "GET /full ";
-static const char moveStr[]      = "POST /remote.htm ";
+#include <robotControl.h>
+static const char forwardStr[]  = "GET /forward ";
+static const char leftStr[]     = "GET /left ";
+static const char rightStr[]    = "GET /right ";
+static const char backStr[]     = "GET /back ";
+static const char halfStr[]     = "GET /half ";
+static const char fullStr[]     = "GET /full ";
+static const char moveStr[]     = "POST /remote.htm ";
 
 const int PIN = 8;
 const int PIN2 = 9;
@@ -137,9 +137,6 @@ const int PIN3 = 10;
 const int PIN4 = 11; 
 const int PIN5 = 12;
 const int PIN6 = 7;
-
-
-
 
 /**************************************************************************************
  * 
@@ -150,9 +147,6 @@ const int PIN6 = 7;
 // These are the HTTP URL match strings for the dynamically created
 // HTML rendering functions.
 // Make these static const so they get put in flash
-static const char szHTMLRestart[]       = "GET /Restart ";
-static const char szHTMLTerminate[]     = "GET /Terminate ";
-static const char szHTMLReboot[]        = "GET /Reboot ";
 static const char szHTMLFavicon[]       = "GET /favicon.ico ";
 static const char szHTMLSample[]        = "GET /Sample ";
 
@@ -195,20 +189,6 @@ void setup(void)
   // It will get invoked when http://<IP>/Sample is specified on the browser
   AddHTMLPage(szHTMLSample,      ComposeHTMLSamplePage);
 
-  // comment this out if you do not want to support
-  // restarting the network stack from a browser
-  //    AddHTMLPage(szHTMLRestart,      ComposeHTMLRestartPage);
-
-  // comment this out if you do not want to support
-  // terminating the server from a browser
-  //    AddHTMLPage(szHTMLTerminate,    ComposeHTMLTerminatePage);
-
-  // comment this out if you do not want to support
-  // rebooting (effectively hitting MCLR) the server from a browser
-  //    AddHTMLPage(szHTMLReboot,       ComposeHTMLRebootPage);
-
-
-
   AddHTMLPage(forwardStr,    moveForward);
   AddHTMLPage(leftStr,       moveLeft);
   AddHTMLPage(rightStr,      moveRight);
@@ -217,12 +197,15 @@ void setup(void)
   AddHTMLPage(fullStr,       setPowerFull);
   AddHTMLPage(moveStr,       moveCommand);
 
+  // Set the PIN mode in the main setup loop
   pinMode(PIN, OUTPUT);
   pinMode(PIN2, OUTPUT);
   pinMode(PIN3, OUTPUT);
   pinMode(PIN4, OUTPUT);
   pinMode(PIN5, OUTPUT);
   pinMode(PIN6, OUTPUT);
+  
+  // Write all PINS to LOW so the initial state is known
   digitalWrite(PIN, LOW);
   digitalWrite(PIN2, LOW);
   digitalWrite(PIN3, LOW);
